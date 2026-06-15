@@ -1,0 +1,48 @@
+---
+title: "Data Analytics, May 15 2026, Spring 2026"
+output: word_document
+date: "2026-05-15"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#   This is the homework assignment on FPKMdatasets.
+#   Data Analytics, May 15 2026, Spring 2026
+#   J. H. Williams ver .1
+#   Filename: 2026may15workingwithfkpm.R
+
+
+
+# 1. Load the data (assuming they are tab or space separated)
+# Note: adjust the path if your files are in a specific folder
+rep1 <- read.table("~/Documents/2026May15/Assignment2/rep1.fpkm", header=TRUE)
+rep2 <- read.table("~/Documents/2026May15/Assignment2/rep2.fpkm", header=TRUE)
+
+# 2. Extract column 10 and apply log10 transformation 
+log_fpkm_rep1 <- log10(rep1[, 10] + 0.01)
+log_fpkm_rep2 <- log10(rep2[, 10] + 0.01)
+
+# 3. Calculate the Pearson correlation coefficient
+cor_coef <- cor(log_fpkm_rep1, log_fpkm_rep2, method = "pearson")
+
+# 4. Make the scatterplot
+plot(log_fpkm_rep1, log_fpkm_rep2, 
+     main = paste("Log10 FPKM Comparison\nCorrelation (r) =", round(cor_coef, 3)),
+     xlab = "Log10 FPKM (Replicate 1)", 
+     ylab = "Log10 FPKM (Replicate 2)",
+     pch = 16,        # Solid circle points
+     col = "purple")    # Point color
+
+# 5. Generate the boxplots
+boxplot(log_fpkm_rep1, log_fpkm_rep2,
+        names = c("Replicate 1", "Replicate 2"),
+        main = "Distribution of Log10 FPKM Values",
+        ylab = "Log10 FPKM",
+        col = c("lightblue", "lightgreen"))
+
+dev.off()
+```
+
